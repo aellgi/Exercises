@@ -1,0 +1,82 @@
+
+
+Övning:
+
+* New -> java project (valfritt namn)
+
+* Högerklicka på projektet och gå in på properties -> Java Build Path ->
+Libraries -> Add External Jars -> Leta upp selenium-server-standalone-x.xx.x.jar
+som du laddade ned tidigare.
+
+* Högerklicka på src-mappen och skapa ny JUnit Test Case, följ guiden i Eclipse.
+Högerklicka på att lägga in JUnit i build path.
+
+*Lägg in ChromeDriver-filen i projektmappen (Du kan öppna path genom att
+högerklicka på projektet i eclipse -> properties -> resource -> klicka på
+knappen med den gula pilen), och sen lägg den där.
+
+*Skapa ny Java-fil som kör skapar ett selenium object och har kod som agerar
+med Skatteverkets hemsida.
+
+
+------------------------------------------------------------
+SeleniumClass.java
+------------------------------------------------------------
+package tests;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SeleniumClass {
+
+	private WebDriver webDriver;
+
+	public SeleniumClass() {
+		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		webDriver = new ChromeDriver();
+		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		webDriver.manage().window().maximize();
+		webDriver.get("https://www.skatteverket.se/privat.4.76a43be412206334b89800052864.html");
+
+	}
+
+	public void goToForm() {
+		webDriver.findElement(By.xpath("//a[contains(text(),'Skatter')]")).click();
+		webDriver.findElement(By.xpath("//div[@class='linkWrp']//a[@class='normal'][contains(text(),'Värdepapper')]")).click();
+
+	}
+
+	public Boolean checkForm() {
+		return webDriver.getPageSource().contains("K4 - ");
+	}
+
+	public void quitSelenium() {
+		webDriver.quit();
+	}
+
+
+}
+------------------------------------------------------------
+Testcase.java
+------------------------------------------------------------
+package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class Testcase {
+
+	SeleniumClass s = new SeleniumClass();
+
+	@Test
+	void test() {
+		s.goToForm();
+		assertEquals(true, s.checkForm());
+		s.quitSelenium();
+	}
+
+}

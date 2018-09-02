@@ -1,0 +1,20 @@
+En grundläggande övning om hur man automatiserar ett test på en hemsida genom
+att använda Java tillsammans med Selenium.
+
+
+Setup:
+1.Ladda ned och installera Eclipse - (https://www.eclipse.org/downloads/).
+2.Ladda ned Selenium för Java - (https://www.seleniumhq.org/download/).
+  - Filen ska heta selenium-server-standalone-x.xx.x där x är nuvarande version.
+3.Ladda ner ChromeDriver - (http://chromedriver.chromium.org/)
+
+Övning:
+1. Gör ett Junit test som kör Selenium.
+
+2. Få Selenium att gå in på Skatteverkets hemsida
+
+3. Klicka på Skatter -> Värdepapper -> Om Aktier
+
+4. Bekräfta att blanketten
+"K4 - Försäljning av värdepapper (aktier, obligationer m.m.)(SKV 2104)"
+finns tillgänglig genom att använda valfri Asserts i Junit.
